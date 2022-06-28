@@ -1,0 +1,7 @@
+<%= form_with model: @player do |f| %>
+  <%= f.label :name, "Name" %>
+  <%= f.text_field :name %>
+  <%= f.hidden_field :team, value: nil %>
+  <%= f.hidden_field :role, value: nil %>
+  <%= f.submit "Join game"%>
+<% end %>
