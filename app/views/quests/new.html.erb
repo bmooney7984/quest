@@ -1,0 +1,15 @@
+<%= turbo_frame_tag "lower-stream" do %>
+  <% if @player.leader_status %>
+    <%= form_with model: @quest do |f| %>
+      <% @quest.quest_assignments.each do |quest_assignment| %>
+        <%= f.fields_for :quest_assignments, quest_assignment do |fields| %>
+          <%= fields.label :player_id, "#{quest_assignment.player.name}" %>
+          <%= fields.check_box :player_id, {checked: false}, "#{quest_assignment.player_id}" %>
+        <% end %>
+      <% end %>
+      <%= f.submit %>
+    <% end %>
+  <% else %>
+    <p>Waiting for leader to start quest...</p>
+  <% end %>
+<% end %>

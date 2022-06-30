@@ -16,7 +16,6 @@
   <div id="join-link">
     <%= form_with model: @game do |f| %>
       Choose your game type:
-      <%= f.hidden_field :number_of_players, value: @players.count %>
       <%= f.label :game_variant_standard, "Standard" %>
       <%= f.radio_button "variant", "standard" %>
       <%= f.submit "Start game" %>

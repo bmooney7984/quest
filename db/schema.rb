@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_28_193235) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_29_203704) do
   create_table "games", force: :cascade do |t|
     t.integer "number_of_players"
     t.integer "quests_passed"
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_28_193235) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "variant"
+    t.integer "next_quest_number"
   end
 
   create_table "players", force: :cascade do |t|
@@ -28,6 +29,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_28_193235) do
     t.datetime "updated_at", null: false
     t.boolean "veteran_status"
     t.boolean "leader_status"
+  end
+
+  create_table "quest_assignments", force: :cascade do |t|
+    t.integer "quest_id"
+    t.integer "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_quest_assignments_on_player_id"
+    t.index ["quest_id"], name: "index_quest_assignments_on_quest_id"
+  end
+
+  create_table "quests", force: :cascade do |t|
+    t.integer "quest_order"
+    t.integer "number_of_participants"
+    t.integer "number_of_failures"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
