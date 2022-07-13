@@ -20,4 +20,10 @@ bottom turbo stream
   good's last chance form for everyone, updates when all pointing objects are created?
   or update player form for leader (to select leader), updates when player is updated %>
 
-<%= turbo_frame_tag "lower-stream", src: new_quest_path %>
+<div id="upper-stream">
+  <%= render partial: "quests/index", locals: {quests: @quests, players: @players} %>
+</div>
+
+<div id="lower-stream">
+  <%= turbo_frame_tag "new-quest", src: new_quest_path %>
+</div>

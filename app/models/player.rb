@@ -1,5 +1,7 @@
 class Player < ApplicationRecord
   has_many :quest_assignments
+  has_many :quests, through: "quest_assignments"
+  has_one :quest_led, class_name: "Quest", foreign_key: "leader_id"
 
   #add name validations
 
@@ -13,11 +15,11 @@ class Player < ApplicationRecord
 
   def self.set_random_leader
     # nonrandom version for testing purposes
-    leader = all.first
-    leader.update(leader_status: true, veteran_status: true)
+      # leader = all.first
+      # leader.update(leader_status: true, veteran_status: true)
     # random version
-    # leader = all.sample
-    # leader.update(leader_status: true, veteran_status: true)
+      leader = all.sample
+      leader.update(leader_status: true, veteran_status: true)
   end
 
   def self.set_roles

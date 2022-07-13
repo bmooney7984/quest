@@ -1,0 +1,67 @@
+<div id="upper-stream">
+  <table>
+    <tr>
+      <td></td>
+      <% 5.times do |i| %>
+        <% if quests[i] %>
+          <th><%= quests[i].leader.name %>'s quest</th>
+        <% else %>
+          <th>Quest <%= (i + 1).to_s %></th>
+        <% end %>
+      <% end %>
+    </tr>
+    <tr>
+      <td></td>
+      <td>2 people</td>
+      <td>3 people</td>
+      <td>2 people</td>
+      <td>4 people</td>
+      <td>3 people</td>
+    </tr>
+    <% 5.times do |j| %>
+      <tr>
+        <th><%= players[j].name %></th>
+        <% 5.times do |i| %>
+          <% if quests[i] %>
+            <% if quests[i].players.include?(players[j])%>
+              <% if quests[i].token_holder_id == players[j].id %>
+                <td><%= image_tag "icons8-diamond-32.png" %></td>
+              <% else %>
+                <td><%= image_tag "icons8-sword-64.png" %></td>
+              <% end %>
+            <% else %>
+              <td></td>
+            <% end %>
+          <% else %>
+            <td></td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+    <tr>
+      <th>Outcome</th>
+      <% 5.times do |i| %>
+        <% if quests[i] %>
+          <% if quests[i].number_of_failures > 0 %>
+            <td class="failed">
+              <% quests[i].number_of_passes.times do %>
+                <%= image_tag "icons8-castle-64.png" %>
+              <% end %>
+              <% quests[i].number_of_failures.times do %>
+                <%= image_tag "icons8-skull-64.png" %>
+              <% end %>
+            </td>
+          <% else %>
+            <td class="passed">
+              <% quests[i].number_of_passes.times do %>
+                <%= image_tag "icons8-castle-64.png" %>
+              <% end %>
+            </td>
+          <% end %>
+        <% else %>
+          <td></td>
+        <% end %>
+      <% end %>
+    </tr>
+  </table>
+</div>

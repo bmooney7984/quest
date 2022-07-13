@@ -1,0 +1,9 @@
+<p>New leader: </p>
+
+<%= form_with url: "/players", method: :patch do |f| %>
+  <% @nonveterans.each do |person| %>
+    <%= f.label "id_#{person.id}", "#{person.name}" %>
+    <%= f.radio_button :id, "#{person.id}" %>
+  <% end %>
+  <%= f.submit "Make leader" %>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_29_203704) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_11_193433) do
   create_table "games", force: :cascade do |t|
     t.integer "number_of_players"
     t.integer "quests_passed"
@@ -46,6 +46,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_29_203704) do
     t.integer "number_of_failures"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "number_of_passes"
+    t.integer "leader_id"
+    t.integer "token_holder_id"
+    t.index ["leader_id"], name: "index_quests_on_leader_id"
+    t.index ["token_holder_id"], name: "index_quests_on_token_holder_id"
   end
 
+  add_foreign_key "quests", "players", column: "leader_id"
+  add_foreign_key "quests", "players", column: "token_holder_id"
 end

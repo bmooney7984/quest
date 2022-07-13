@@ -7,6 +7,9 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
+    unless @game.save
+      #can something go wrong here?
+    end
     @game.update(number_of_players: 5)
     @game.update(next_quest_number: 1)
     @game.update(quests_passed: 0)
@@ -23,6 +26,8 @@ class GamesController < ApplicationController
   def show
     @player = Player.find(session[:player_id])
     @scion = Player.where(role: "scion").take
+    @quests = Quest.order(:quest_order)
+    @players = Player.all
   end
 
   private

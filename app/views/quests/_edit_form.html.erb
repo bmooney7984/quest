@@ -1,0 +1,14 @@
+<p>Vote on quest:</p>
+
+<%= form_with model: @quest do |f| %>
+  <%= f.label :choice_pass, "Pass" %>
+  <%= f.radio_button :choice, "pass" %>
+  <% if (@quest.token_holder_id == @player.id && @player.role != "morgan") || @player.role == "knight" %>
+    <%= f.label :choice_fail, "Fail" %>
+    <%= f.radio_button :choice, "fail", disabled: true %>
+  <% else %>
+    <%= f.label :choice_fail, "Fail" %>
+    <%= f.radio_button :choice, "fail" %>
+  <% end %>
+  <%= f.submit "Submit" %>
+<% end %>

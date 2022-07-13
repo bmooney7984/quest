@@ -1,0 +1,20 @@
+<%= turbo_frame_tag "edit-quest" do %>
+  <p>Quest participants:</p>
+  <ul>
+    <% @quest.players.each do |person| %>
+      <li>
+        <% if @quest.token_holder_id == person.id %>
+          <%= person.name %> (token)
+        <% else %>
+          <%= person.name %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <% if @quest.players.include?(@player) %>
+    <%= render "edit_form" %>
+  <% else %>
+    <p>Awaiting outcome...</p>
+  <% end %>
+<% end %>
