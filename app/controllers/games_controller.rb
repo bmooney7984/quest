@@ -30,6 +30,13 @@ class GamesController < ApplicationController
     @players = Player.all
   end
 
+  def destroy
+    Game.delete_all
+    Quest.delete_all
+    Player.delete_all
+    QuestAssignment.delete_all
+  end
+
   private
 
   def game_params

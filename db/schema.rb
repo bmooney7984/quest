@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_11_193433) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_13_173552) do
   create_table "games", force: :cascade do |t|
     t.integer "number_of_players"
     t.integer "quests_passed"
@@ -29,6 +29,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_11_193433) do
     t.datetime "updated_at", null: false
     t.boolean "veteran_status"
     t.boolean "leader_status"
+    t.integer "left_pointee_id"
+    t.integer "right_pointee_id"
+    t.index ["left_pointee_id"], name: "index_players_on_left_pointee_id"
+    t.index ["right_pointee_id"], name: "index_players_on_right_pointee_id"
   end
 
   create_table "quest_assignments", force: :cascade do |t|
@@ -53,6 +57,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_11_193433) do
     t.index ["token_holder_id"], name: "index_quests_on_token_holder_id"
   end
 
+  add_foreign_key "players", "players", column: "left_pointee_id"
+  add_foreign_key "players", "players", column: "right_pointee_id"
   add_foreign_key "quests", "players", column: "leader_id"
   add_foreign_key "quests", "players", column: "token_holder_id"
 end

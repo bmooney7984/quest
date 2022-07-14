@@ -12,18 +12,43 @@ class PlayersController < ApplicationController
       session[:player_id] = @player.id
       redirect_to new_game_path
     else
+      puts @player.errors.full_messages
       #error notification about bad name
     end
   end
 
   def edit
+    @player = Player.find(session[:player_id])
+  end
+
+  def update
+    @player = Player.find(session[:player_id])
+
+    if @player.update(pointing_params)
+    else
+      # they didn't pick two distinct people
+    end
+
+    if Player.all_accusations_made?
+      @players = Player.order(:team, :role, :id)
+      @player.broadcast_replace_to "main-stream", target: "lower-stream", partial: "games/last_chance_outcome", locals: {players: @players}
+      Game.delete_all
+      Quest.delete_all
+      Player.delete_all
+      QuestAssignment.delete_all
+    else
+      render "waiting"
+    end
+  end
+
+  def multi_edit
     @players = Player.all
     @player = Player.find(session[:player_id])
     @leader = Player.where(leader_status: true).take
     @nonveterans = Player.where(veteran_status: false)
   end
 
-  def update
+  def multi_update
     @old_leader = Player.where(leader_status: true).take
     @old_leader.update(leader_status: false)
 
@@ -37,5 +62,9 @@ class PlayersController < ApplicationController
 
   def player_params
     return params.require(:player).permit(:name, :team, :role)
+  end
+
+  def pointing_params
+    return params.require(:player).permit(:left_pointee_id, :right_pointee_id)
   end
 end

@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "new-quest" do %>
   <% if @player.leader_status %>
-    <%= form_with model: @quest, html: {class: "quest-creation-form"} do |f| %>
-      <div>
+    <%= form_with model: @quest, html: {class: "two-column-form"} do |f| %>
+      <div class="vertical-inputs">
         <p>Quest participants:</p>
         <% @quest.quest_assignments.each do |quest_assignment| %>
           <%= f.fields_for :quest_assignments, quest_assignment do |fields| %>
@@ -10,7 +10,7 @@
           <% end %>
         <% end %>
       </div>
-      <div>
+      <div class="vertical-inputs">
         <p>Magic token holder:</p>
         <%= f.collection_radio_buttons :token_holder_id, @players, :id, :name %>
       </div>

@@ -1,0 +1,7 @@
+<%= turbo_frame_tag "edit-players" do %>
+  <% if @player.leader_status %>
+    <%= render "multi_edit_form" %>
+  <% else %>
+    <p>Waiting for <%= @leader.name %> to pick new leader... </p>
+  <% end %>
+<% end %>

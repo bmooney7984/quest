@@ -1,0 +1,46 @@
+<table>
+  <tr>
+    <td></td>
+    <td></td>
+    <% players.reverse_order.each do |player| %>
+      <td><%= player.name %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <td>Morgan le Fay</td>
+    <td><%= players[0].name %></td>
+    <% players.reverse_order.each do |accuser| %>
+      <% if accuser.left_pointee_id == players[0].id || accuser.right_pointee_id == players[0].id %>
+        <td><%= image_tag "icons8-left-arrow-49.png" %></td>
+      <% else %>
+        <td></td>
+      <% end %>
+    <% end %>
+  </tr>
+  <tr>
+    <td>Scion</td>
+    <td><%= players[1].name %></td>
+    <% players.reverse_order.each do |accuser| %>
+      <% if accuser.left_pointee_id == players[1].id || accuser.right_pointee_id == players[1].id %>
+        <td><%= image_tag "icons8-left-arrow-49.png" %></td>
+      <% else %>
+        <td></td>
+      <% end %>
+    <% end %>
+  </tr>
+  <% 3.times do |i| %>
+    <tr>
+      <td>Knight</td>
+      <td><%= players[i + 2].name %></td>
+      <% players.reverse_order.each do |accuser| %>
+        <% if accuser.left_pointee_id == players[i + 2].id || accuser.right_pointee_id == players[i + 2].id %>
+          <td><%= image_tag "icons8-left-arrow-49.png" %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<%= render partial: "games/end", locals: {winning_team: Game.first.last_chance_winner} %>

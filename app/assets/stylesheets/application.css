@@ -34,26 +34,26 @@
    background-color: hsl(0, 100%, 30%);
  }
 
- .quest-creation-form {
+ .two-column-form {
    display: grid;
    grid-template-columns: 250px 250px;
    row-gap: 15px;
  }
 
- .quest-creation-form div {
+ .vertical-inputs {
    display: grid;
    grid-template-columns: 20px 1fr;
  }
 
- .quest-creation-form div input {
+ .vertical-inputs input {
    justify-self: start;
  }
 
- .quest-creation-form input[type="submit"] {
+ .two-column-form input[type="submit"] {
    justify-self: start;
  }
 
- .quest-creation-form div p {
+ .vertical-inputs p {
    grid-column: 1 / 3 ;
  }
 
@@ -61,7 +61,7 @@
    margin: 0;
  }
 
- .quest-creation-form p {
+ .two-column-form p {
    margin-bottom: 10px;
    margin-top: 0;
    font-weight: bold;
@@ -69,4 +69,10 @@
 
  img {
    width: 28px;
+ }
+
+ .corner {
+   position: fixed;
+   bottom: 0;
+   right: 0;
  }

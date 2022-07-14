@@ -1,7 +1,13 @@
-<%= turbo_frame_tag "edit-players" do %>
-  <% if @player.leader_status %>
-    <%= render "edit_form" %>
-  <% else %>
-    <p>Waiting for <%= @leader.name %> to pick new leader... </p>
+<%= turbo_frame_tag "edit-player" do %>
+  <%= form_with model: @player, url: current_player_path, html: {class: "two-column-form"} do |f| %>
+    <div class="vertical-inputs">
+      <p>Select person:</p>
+      <%= f.collection_radio_buttons :left_pointee_id, Player.all, :id, :name %>
+    </div>
+    <div class="vertical-inputs">
+      <p>Select person:</p>
+      <%= f.collection_radio_buttons :right_pointee_id, Player.all, :id, :name %>
+    </div>
+    <%= f.submit "Make accusation" %>
   <% end %>
 <% end %>

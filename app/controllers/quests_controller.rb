@@ -44,19 +44,27 @@ class QuestsController < ApplicationController
       @quest.update(number_of_failures: @quest.number_of_failures + 1)
     end
 
-    if @quest.number_of_passes + @quest.number_of_failures == @quest.number_of_participants
+    if @quest.number_of_passes + @quest.number_of_failures == @quest.number_of_participants # every quest participant has voted
       game.update(quests_remaining: game.quests_remaining - 1, next_quest_number: game.next_quest_number + 1)
-      if @quest.number_of_failures == 0
+      if @quest.number_of_failures == 0 # quest passed
         game.update(quests_passed: game.quests_passed + 1)
       end
       @quest.broadcast_replace_to "main-stream", target: "upper-stream", partial: "quests/index", locals: {quests: Quest.order(:quest_order), players: Player.all}
+      if game.quests_passed == 3
+        @quest.broadcast_replace_to "main-stream", target: "lower-stream", partial: "games/end", locals: {winning_team: "good"}
+        Game.delete_all
+        Quest.delete_all
+        Player.delete_all
+        QuestAssignment.delete_all
+      end
       if game.quests_passed + game.quests_remaining < 3
         # good's last chance
-        puts "Time for good's last chance"
+        Player.find(session[:player_id])
+        @quest.broadcast_replace_to "main-stream", target: "lower-stream", partial: "players/edit_frame", locals: {}
       else
-        @quest.broadcast_replace_to "main-stream", target: "lower-stream", partial: "players/edit_frame"
+        @quest.broadcast_replace_to "main-stream", target: "lower-stream", partial: "players/multi_edit_frame"
       end
-    else
+    else # not every quest participant has voted
       render "waiting"
     end
   end
