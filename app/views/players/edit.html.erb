@@ -1,4 +1,6 @@
 <%= turbo_frame_tag "edit-player" do %>
+  <p>Time for good's last chance!</p>
+
   <%= form_with model: @player, url: current_player_path, html: {class: "two-column-form"} do |f| %>
     <div class="vertical-inputs">
       <p>Select person:</p>

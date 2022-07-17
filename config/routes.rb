@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   get "player/edit", to: "players#edit", as: "edit_current_player"
   match "player", to: "players#update", via: [:patch, :put], as: "current_player"
   # Defines the root path route ("/")
-  # root "articles#index"
+  root "players#new"
 end

@@ -1,29 +1,36 @@
 <%= turbo_stream_from "main-stream" %>
 
-<h1>Your info</h1>
-<p>Team: <%= @player.team.capitalize %></p>
-<% if @player.role == "knight" %>
-  <p>Role: Loyal knight of Arthur</p>
-<% elsif @player.role == "scion"%>
-  <p>Role: The Scion</p>
-<% elsif @player.role == "morgan" %>
-  <p>Role: Morgan le Fay</p>
-  <p>The scion is <%= @scion.name %></p>
-<% end %>
+<div class="grid-container">
+  <div class="player-info">
+    <h1>Your info</h1>
+    <p>Team: <%= @player.team.capitalize %></p>
+    <% if @player.role == "knight" %>
+      <p>Role: Loyal knight of Arthur</p>
+      <p class="flavor">"'[W]ilt thou leave / Thine easeful biding here, and risk thine all, / Life, limbs, for one that is not proven King?' . . . 'I will walk through fire . . . Not proven, who swept the dust of ruined Rome / From off the threshold of the realm, and crushed / The Idolaters, and made the people free? / Who should be King save him who makes us free?'"</p>
+      <p class="flavor">- Alfred, Lord Tennyson, "Gareth and Lynette"</p>
+    <% elsif @player.role == "scion"%>
+      <p>Role: The Scion</p>
+      <p class="flavor">"And kindly sped their parley, / And courteous was their cheer, / Nor sign was there from word or look / Betokened evil near / ... / A moment paused Sir Arthur / To cool his burning brow; / Three hundred knights had followed him -- / How many follow now?"</p>
+      <p class="flavor">- Robert Buchanan, "Camlan"</p>
+    <% elsif @player.role == "morgan" %>
+      <p>Role: Morgan le Fay</p>
+      <p>The scion is <%= @scion.name %></p>
+      <p class="flavor">"With soft gray eyes she gloomed and glowered; / With soft red lips she sang a song: / What knight might gaze upon her face, / Nor fare along? / For all her looks were full of spells, / And all her words of sorcery; / And in some way they seemed to say / 'Oh, come with me!'"</p>
+      <p class="flavor">- Madison Cawein, "Morgan Le Fay"</p>
+    <% end %>
+  </div>
 
-<%# top turbo stream
-  quest index, updates when quest is created or updated
+  <% if @player.role == "knight" %>
+    <%= image_tag "knight.jpg" %>
+  <% elsif @player.role == "scion"%>
+    <%= image_tag "scion.jpg" %>
+  <% elsif @player.role == "morgan" %>
+    <%= image_tag "morgan.jpg" %>
+  <% end %>
 
-bottom turbo stream
-  new quest form for leader, updates when quest is created
-  update quest form for those on quest, updates when quest is updated
-  good's last chance form for everyone, updates when all pointing objects are created?
-  or update player form for leader (to select leader), updates when player is updated %>
-
-<div id="upper-stream">
   <%= render partial: "quests/index", locals: {quests: @quests, players: @players} %>
-</div>
 
-<div id="lower-stream">
-  <%= turbo_frame_tag "new-quest", src: new_quest_path %>
+  <div id="lower-stream">
+    <%= turbo_frame_tag "new-quest", src: new_quest_path %>
+  </div>
 </div>

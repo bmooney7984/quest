@@ -1,13 +1,13 @@
-<table>
+<table class="last-chance-table">
   <tr>
     <td></td>
     <td></td>
     <% players.reverse_order.each do |player| %>
-      <td><%= player.name %></td>
+      <th><%= player.name %></th>
     <% end %>
   </tr>
   <tr>
-    <td>Morgan le Fay</td>
+    <th>Morgan le Fay</th>
     <td><%= players[0].name %></td>
     <% players.reverse_order.each do |accuser| %>
       <% if accuser.left_pointee_id == players[0].id || accuser.right_pointee_id == players[0].id %>
@@ -18,7 +18,7 @@
     <% end %>
   </tr>
   <tr>
-    <td>Scion</td>
+    <th>Scion</th>
     <td><%= players[1].name %></td>
     <% players.reverse_order.each do |accuser| %>
       <% if accuser.left_pointee_id == players[1].id || accuser.right_pointee_id == players[1].id %>
@@ -30,7 +30,7 @@
   </tr>
   <% 3.times do |i| %>
     <tr>
-      <td>Knight</td>
+      <th>Knight</th>
       <td><%= players[i + 2].name %></td>
       <% players.reverse_order.each do |accuser| %>
         <% if accuser.left_pointee_id == players[i + 2].id || accuser.right_pointee_id == players[i + 2].id %>
@@ -43,4 +43,4 @@
   <% end %>
 </table>
 
-<%= render partial: "games/end", locals: {winning_team: Game.first.last_chance_winner} %>
+<%= render partial: "games/end", locals: {winning_team: Game.first.last_chance_winner, class_name: "with-table"} %>

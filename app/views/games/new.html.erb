@@ -5,19 +5,18 @@
 
 <ul id="player-list">
   <% @players.each do |player| %>
-    <li><%= player.name %> (<%= player.id %>)</li>
+    <li><%= player.name %></li>
   <% end %>
 </ul>
 
-<h2>Your player_id</h2>
-<%= session[:player_id] %>
-
 <% if @player.is_first? %>
   <div id="join-link">
-    <%= form_with model: @game do |f| %>
-      Choose your game type:
-      <%= f.label :game_variant_standard, "Standard" %>
-      <%= f.radio_button "variant", "standard" %>
+    <%= form_with model: @game, html: {class: "one-column-form"} do |f| %>
+      <div class="vertical-inputs">
+        <p>Choose your game type:</p>
+        <%= f.radio_button "variant", "standard" %>
+        <%= f.label :variant_standard, "Standard" %>
+      </div>
       <%= f.submit "Start game" %>
     <% end %>
   </div>
@@ -26,3 +25,15 @@
     <p>Waiting for first player to choose game type...</p>
   </div>
 <% end %>
+
+<div class="centerpiece">
+  <%= image_tag "camelot.jpg" %>
+  <div class="caption">
+    <p class="flavor">"On either side the river lie<br>
+    Long fields of barley and of rye,<br>
+    That clothe the wold and meet the sky;<br>
+    And thro' the field the road runs by<br>
+    To many-tower'd Camelot;"</p>
+    <p class="flavor">- Alfred, Lord Tennyson, "The Lady of Shalott"</p>
+  </div>
+</div>

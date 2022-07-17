@@ -24,21 +24,25 @@ class PlayersController < ApplicationController
   def update
     @player = Player.find(session[:player_id])
 
+    if params[:player][:left_pointee_id] == "" && params[:player][:right_pointee_id] == "" # form was submitted empty
+      return
+    end
+
     if @player.update(pointing_params)
+      if Player.all_accusations_made?
+        @players = Player.order(:team, :role, :id)
+        @player.broadcast_replace_to "main-stream", target: "lower-stream", partial: "games/last_chance_outcome", locals: {players: @players}
+        Game.delete_all
+        Quest.delete_all
+        Player.delete_all
+        QuestAssignment.delete_all
+      else
+        render "waiting"
+      end
     else
       # they didn't pick two distinct people
     end
 
-    if Player.all_accusations_made?
-      @players = Player.order(:team, :role, :id)
-      @player.broadcast_replace_to "main-stream", target: "lower-stream", partial: "games/last_chance_outcome", locals: {players: @players}
-      Game.delete_all
-      Quest.delete_all
-      Player.delete_all
-      QuestAssignment.delete_all
-    else
-      render "waiting"
-    end
   end
 
   def multi_edit
@@ -49,6 +53,10 @@ class PlayersController < ApplicationController
   end
 
   def multi_update
+    if params[:id] == nil # form was submitted empty
+      return
+    end
+
     @old_leader = Player.where(leader_status: true).take
     @old_leader.update(leader_status: false)
 

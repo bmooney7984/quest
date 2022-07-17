@@ -1,9 +1,10 @@
-<p>New leader: </p>
-
-<%= form_with url: "/players", method: :patch do |f| %>
-  <% @nonveterans.each do |person| %>
-    <%= f.label "id_#{person.id}", "#{person.name}" %>
-    <%= f.radio_button :id, "#{person.id}" %>
-  <% end %>
+<%= form_with url: "/players", method: :patch, html: {class: "one-column-form"} do |f| %>
+  <div class="vertical-inputs">
+    <p>New leader: </p>
+    <% @nonveterans.each do |person| %>
+      <%= f.radio_button :id, "#{person.id}" %>
+      <%= f.label "id_#{person.id}", "#{person.name}" %>
+    <% end %>
+  </div>
   <%= f.submit "Make leader" %>
 <% end %>

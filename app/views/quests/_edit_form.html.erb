@@ -1,14 +1,15 @@
-<p>Vote on quest:</p>
-
-<%= form_with model: @quest do |f| %>
-  <%= f.label :choice_pass, "Pass" %>
-  <%= f.radio_button :choice, "pass" %>
-  <% if (@quest.token_holder_id == @player.id && @player.role != "morgan") || @player.role == "knight" %>
-    <%= f.label :choice_fail, "Fail" %>
-    <%= f.radio_button :choice, "fail", disabled: true %>
-  <% else %>
-    <%= f.label :choice_fail, "Fail" %>
-    <%= f.radio_button :choice, "fail" %>
-  <% end %>
+<%= form_with model: @quest, html: {class: "one-column-form"} do |f| %>
+  <div class="horizontal-inputs">
+    <p>Vote on quest:</p>
+    <%= f.radio_button :choice, "pass" %>
+    <%= f.label :choice_pass, "Pass" %>
+    <% if (@quest.token_holder_id == @player.id && @player.role != "morgan") || @player.role == "knight" %>
+      <%= f.radio_button :choice, "fail", disabled: true %>
+      <%= f.label :choice_fail, "Fail" %>
+    <% else %>
+      <%= f.radio_button :choice, "fail" %>
+      <%= f.label :choice_fail, "Fail" %>
+    <% end %>
+  </div>
   <%= f.submit "Submit" %>
 <% end %>

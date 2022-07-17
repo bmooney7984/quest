@@ -38,6 +38,10 @@ class QuestsController < ApplicationController
     @quest = Quest.find(params[:id])
     game = Game.first
 
+    if params[:quest] == nil # form was submitted empty
+      return
+    end
+
     if params[:quest][:choice] == "pass"
       @quest.update(number_of_passes: @quest.number_of_passes + 1)
     else
@@ -51,7 +55,7 @@ class QuestsController < ApplicationController
       end
       @quest.broadcast_replace_to "main-stream", target: "upper-stream", partial: "quests/index", locals: {quests: Quest.order(:quest_order), players: Player.all}
       if game.quests_passed == 3
-        @quest.broadcast_replace_to "main-stream", target: "lower-stream", partial: "games/end", locals: {winning_team: "good"}
+        @quest.broadcast_replace_to "main-stream", target: "lower-stream", partial: "games/end", locals: {winning_team: "good", class_name: "without-table"}
         Game.delete_all
         Quest.delete_all
         Player.delete_all

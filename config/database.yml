@@ -20,6 +20,12 @@ test:
   <<: *default
   database: db/test.sqlite3
 
+# This is a combination of what is in the Heroku deployment guide and what is in this article (specifically, lack of password): https://medium.com/geekculture/ruby-on-rails-switch-from-sqlite3-to-postgres-590009645c25
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  database: myapp_production
+  username: myapp
+  password:
